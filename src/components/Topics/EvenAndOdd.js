@@ -2,40 +2,36 @@
 import React, { Component } from "react";
 
 class EvenAndOdd extends Component {
-    constructor(props){
-                
-    super(props);
-
-    this.state = {
-        evenArray: [],
-        oddArray: [],
-        userInput: ""
+    constructor(props){          
+        super(props);
+        this.state = {
+            evenArray: [],
+            oddArray: [],
+            userInput: ""
     }
 }
 
 changeHandler = (event) => {
-    event.persist();
-
-    let value = event.target.value;
-
     this.setState({
-        [event.target.userInput]: value
+        ...this.state, userInput: event.target.value
     })
-
     console.log(this.state.userInput)
-
 }
 
-changeClicker = (event) => {
-    event.persist();
+changeClicker(userInput){
+    let splitArray = userInput.split(",")
+    let newOddArray = []
+    let newEvenArray = []
 
-    let value = event.target.value;
-
-    this.setState({
-        [event.target.evenArray]: value,
-        [event.target.oddArray]: value
-    })
-    console.log(this.state.evenArray, this.state.oddArray)
+    for(let i =0; i < splitArray.length; i++){
+        if(splitArray[i] % 2 === 0){
+            newEvenArray.push(splitArray[i])
+        } else{
+            newOddArray.push(splitArray[i])
+        }
+    }
+    console.log(newEvenArray, newOddArray)
+    this.setState({evenArray: newEvenArray, oddArray: newOddArray})
 }
 
 // evenAndOddSort(){
@@ -59,17 +55,18 @@ changeClicker = (event) => {
             
             <button 
             className="confirmationButton"
-            onClick={this.changeClicker}
-            />
+            onClick={() => {this.changeClicker(this.state.userInput)}}>
+                Split
+            </button>
 
             
             
             <span className="resultsBox" id="evenArray">
-                Even array: [{this.state.evenArray}]
+                Even array: {JSON.stringify(this.state.evenArray)}
             </span>
 
             <span className="resultsBox" id="oddArray">
-                Odd array: [{this.state.oddArray}]
+                Odd array: {JSON.stringify(this.state.oddArray)}
             </span>
 
 
